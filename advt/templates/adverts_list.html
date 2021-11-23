@@ -1,0 +1,71 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-info p-3">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'advt-list' %}">Avitoplus</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'advt-list' %}">Объявления</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'advt-create' %}">Создать</a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input name="q" class="form-control me-2" type="search" placeholder="Моторная лодка" aria-label="Search">
+                <button class="btn btn-primary" type="submit">Найти</button>
+            </form>
+            <a href="{% url 'logout' %}" class="btn btn-danger ms-5">Выйти</a>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+    <div class="row mt-5">
+        {% for advt in adverts %}
+            <div class="col-lg-3 col-md-4 col-sm-12">
+                <div class="card mb-3">
+                    <img src="{{ advt.photo.url }}" class="card-img-top" alt="" width=>
+                    <div class="card-body">
+                        <a href="{% url 'advt-detail' pk=advt.pk %}" class="card-title">{{ advt.title }}</a>
+                        <p class="card-text">{{ advt.price }} ₽</p>
+                        <p class="card-text">{{ advt.address }}</p>
+                        {% if advt.is_liked %}
+                            <a href="{% url 'advt-dislike' pk=advt.pk %}"><img src="{% static 'images/heart-red.png' %}" alt=""></a>
+                        {% else %}
+                            <a href="{% url 'advt-like' pk=advt.pk %}"><img src="{% static 'images/heart-empty.png' %}" alt=""></a>
+                        {% endif %}
+                        <span style="vertical-align: middle;">{{ advt.like_set.all|length }}</span>
+                    </div>
+                    <div class="card-footer">
+                      <small class="text-muted">Последнее обновление {{ advt.update_at }}</small>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="pagination mb-5">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">
+                <img src="{% static 'images/arrow-left.png' %}" alt="">
+            </a>
+        {% endif %}
+
+        <span class="current" style="margin-top: 2px">
+            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a  href="?page={{ page_obj.next_page_number }}">
+                <img src="{% static 'images/arrow-right.png' %}" alt="">
+            </a>
+        {% endif %}
+    </div>
+{% endblock %}

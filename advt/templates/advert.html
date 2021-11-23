@@ -1,0 +1,57 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-info p-3">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'advt-list' %}">Avitoplus</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{% url 'advt-list' %}">Объявления</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'advt-create' %}">Создать</a>
+                </li>
+            </ul>
+            <a href="{% url 'logout' %}" class="btn btn-danger ms-5">Выйти</a>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-7 d-flex flex-column">
+                <h3>{{ advert.title }}</h3>
+                <p class="mt-3 text-muted">Последнее обновление {{ advert.update_at }}</p>
+                <img class="img-fluid" src="{{ advert.photo.url }}" alt="">
+            </div>
+            <div class="col-3 d-flex flex-column justify-content-end">
+                <h3>{{ advert.price }} ₽</h3>
+                <button class="btn btn-lg btn-primary">В корзину</button>
+            </div>
+            <p class="mt-3">{{ advert.text }}</p>
+        </div>
+        <div class="border bg-light p-2">
+            {% for comment in advert.comment_set.all %}
+                <p class="m-0 p-0 text-muted">{{ comment.create_at }}</p>
+                <p>{{ comment.user.username }}: {{ comment.text }}</p>
+            {% endfor %}
+            <form class="d-flex flex-column" action="{% url 'comment-create' pk=advert.pk %}" method="post">
+                {% csrf_token %}
+                <div class="mt-3">
+                    <input class="form-control" name="text" type="text" id="id_text" placeholder="Отличный телефон..">
+                </div>
+                <div class="mt-4">
+                    <input class="btn btn-success" type="submit" value="Отправить">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base_generic.html" %}
+
+
+{% block navbar %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-info p-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'advt-list' %}">Avitoplus</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{% url 'advt-list' %}">Объявления</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'advt-create' %}">Создать</a>
+                    </li>
+                </ul>
+                <a href="{% url 'login' %}" class="btn btn-primary ms-4">Войти</a>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-6 mx-auto">
+                <form method="post">
+                    {% csrf_token %}
+                    {% for error in non_field_errors %}
+                        <p class="text-danger mt-2">{{ error }}</p>
+                    {% endfor %}
+                    <div class="mt-3">
+                        <label class="form-label" for="id_username">Имя пользователя</label>
+                        {{ form.username }}
+                        {% for error in form.username.errors %}
+                            <p class="text-danger mt-2">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="mt-3">
+                        <label class="form-label" for="id_password">Пароль</label>
+                        {{ form.password }}
+                        {% for error in form.password.errors %}
+                            <p class="text-danger mt-2">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    <input class="btn btn-primary mt-4" type="submit" value="Войти" />
+                    <input type="hidden" name="next" value="{{ next }}" />
+                </form>
+                <p class="mt-3">Еще нет аккаунта? <a href="{% url 'register' %}">Зарегестрируйся прямо сейчас</a></p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
