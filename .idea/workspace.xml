@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b814ee22-0a65-4a3a-9eef-6b97bee48eba" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prodavito/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/prodavito/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +67,7 @@
       <workItem from="1637675093348" duration="33000" />
       <workItem from="1637675141076" duration="123000" />
       <workItem from="1637675320473" duration="950000" />
-      <workItem from="1637735931618" duration="747000" />
+      <workItem from="1637735931618" duration="1512000" />
     </task>
     <servers />
   </component>
